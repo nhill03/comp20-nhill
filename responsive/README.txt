@@ -1,0 +1,1 @@
+Blank readme for the responsive development lab
