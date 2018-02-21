@@ -61,23 +61,24 @@ var songLyrics = ["We're no strangers to love",
 "Never gonna say goodbye",
 "Never gonna tell a lie and hurt you"];
 
+var delayTimes = [1000, 5000, 10000, 15000, 19000];
+
 function getSongLyrics() {
 	return songLyrics;
 }
 
-function updateHTML(element, i) {
-	element.innerHTML = i;
-}
+function printSubtitles() {
+	var lyricsElmt = document.getElementById("lyrics");
+	var videoElmt = document.getElementById("rickroll");
 
-function displayLyrics(element) {
 	var i = 0;
-	element.innerHTML = "u suck";
-	while (i < songLyrics.length) {
-		doSetTimeout(element, i);
-		i++;
+	var counter = 0;
+	// replace counter with videoElmt.currentTime
+	while(i < songLyrics.length) {
+		if (counter == delayTimes[i]){
+			lyricsElmt.innerHTML = songLyrics[i];
+			i++;
+		}
+		counter++;
 	}
-}
-
-function doSetTimeout(element, i) {
-	setTimeout(function(){element.innerHTML = i;}, 1000)
 }
