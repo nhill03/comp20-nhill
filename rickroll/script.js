@@ -1,5 +1,3 @@
-window.onload = printSubtitles;
-
 var songLyrics = ["We're no strangers to love",
 "You know the rules and so do I",
 "A full commitment's what I'm thinking of",
@@ -63,7 +61,7 @@ var songLyrics = ["We're no strangers to love",
 "Never gonna say goodbye",
 "Never gonna tell a lie and hurt you"];
 
-var delayTimes = [5000, 6000, 7500, 9000, 10000];
+var delayTimes = [5, 6, 7, 9, 10];
 
 var lyricsElmt = document.getElementById("lyrics");
 var videoElmt = document.getElementById("rickroll");
@@ -72,19 +70,19 @@ function getSongLyrics() {
 	return songLyrics;
 }
 
-function printSubtitles() {
+function printSubtitles(videoElmt, lyricsElmt) {
 	var i = 0;
 	var counter = 0;
 	// replace counter with videoElmt.currentTime
 	while(i < delayTimes.length) {
-		if (videoElmt.currentTime == delayTimes[i]){
-			lyricsElmt.innerHTML = songLyrics[i];
-			i++;
+		if (videoElmt.currentTime === delayTimes[i]){
+			lyricsElmt.firstChild.nodeValue = songLyrics[i];
+			i = i + 1;
 		}
-		counter++;
+		counter = counter + 1;
 	}
 }
 
 function printOnPlay() {
-	lyricsElmt.addEventListener("playing", printSubtitles, true);
+	lyricsElmt.addEventListener("playing", fucntion(){printSubtitles(videoElmt, lyricsElmt);}, false);
 }
