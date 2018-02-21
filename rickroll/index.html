@@ -12,17 +12,20 @@
 
 <div class="video-container">
 	<video src="https://www.cs.tufts.edu/comp/20/rickroll.mp4" id="rickroll" controls></video>
-
 </div>
-	<div id="lyrics"></div>
+<div id="lyrics"></div>
 
 
 <script type="text/javascript" src="script.js"></script>
-<script type="text/javascript">
+<script>
 	//printSubtitles();
 	var lyricsElmt = document.getElementById("lyrics");
 	var videoElmt = document.getElementById("rickroll");
-	printOnPlay(videoElmt, lyricsElmt);
+
+	videoElmt.addEventListener('playing', function() {
+		printSubtitles(videoElmt, lyricsElmt);
+		}, false);
+
 </script>
 </body>
 </html>	

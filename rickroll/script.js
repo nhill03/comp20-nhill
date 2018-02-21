@@ -1,4 +1,5 @@
-var songLyrics = ["We're no strangers to love",
+var songLyrics = [
+"We're no strangers to love",
 "You know the rules and so do I",
 "A full commitment's what I'm thinking of",
 "You wouldn't get this from any other guy",
@@ -59,30 +60,23 @@ var songLyrics = ["We're no strangers to love",
 "Never gonna run around and desert you",
 "Never gonna make you cry",
 "Never gonna say goodbye",
-"Never gonna tell a lie and hurt you"];
+"Never gonna tell a lie and hurt you"
+];
 
 var delayTimes = [5, 6, 7, 9, 10];
-
-var lyricsElmt = document.getElementById("lyrics");
-var videoElmt = document.getElementById("rickroll");
 
 function getSongLyrics() {
 	return songLyrics;
 }
 
+
 function printSubtitles(videoElmt, lyricsElmt) {
 	var i = 0;
-	var counter = 0;
-	// replace counter with videoElmt.currentTime
 	while(i < delayTimes.length) {
-		if (videoElmt.currentTime === delayTimes[i]){
-			lyricsElmt.firstChild.nodeValue = songLyrics[i];
+		if (Math.round(videoElmt.currentTime) === delayTimes[i]){
+			lyricsElmt.innerHTML= songLyrics[i];
 			i = i + 1;
 		}
-		counter = counter + 1;
+		console.log(Math.round(videoElmt.currentTime));
 	}
-}
-
-function printOnPlay(videoElmt, lyricsElmt) {
-	lyricsElmt.addEventListener("playing", fucntion(){printSubtitles(videoElmt, lyricsElmt);}, false);
 }
