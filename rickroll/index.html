@@ -20,7 +20,9 @@
 <script type="text/javascript" src="script.js"></script>
 <script type="text/javascript">
 	//printSubtitles();
-	printOnPlay();
+	var lyricsElmt = document.getElementById("lyrics");
+	var videoElmt = document.getElementById("rickroll");
+	printOnPlay(videoElmt, lyricsElmt);
 </script>
 </body>
 </html>	

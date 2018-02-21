@@ -83,6 +83,6 @@ function printSubtitles(videoElmt, lyricsElmt) {
 	}
 }
 
-function printOnPlay() {
+function printOnPlay(videoElmt, lyricsElmt) {
 	lyricsElmt.addEventListener("playing", fucntion(){printSubtitles(videoElmt, lyricsElmt);}, false);
 }
