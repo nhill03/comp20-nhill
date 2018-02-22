@@ -75,7 +75,7 @@ var delayTimes = [
 function getSongLyrics() {
 	return songLyrics;
 }
-function getDelayTime() {
+function getDelayTimes() {
 	return delayTimes;
 }
 

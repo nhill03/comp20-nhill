@@ -30,7 +30,7 @@
     	videoElmt.addEventListener('timeupdate',function(event){
       		if(delayTimes[i] == Math.round(videoElmt.currentTime)) {
       			lyricsElmt.innerHTML = lyrics[i];
-      			i++
+      			i++;
       		}
     	},false);
   	})();
