@@ -72,11 +72,15 @@ function getSongLyrics() {
 
 function printSubtitles(videoElmt, lyricsElmt) {
 	var i = 0;
+	var startTime = new Date().getTime() / 1000;
+	Math.round(startTime);
+	var currentTime = new Date();
 	while(i < delayTimes.length) {
-		if (Math.round(videoElmt.currentTime) === delayTimes[i]){
+		
+		/*if ((currentTime.getTime() - startTime) === delayTimes[i]){
 			lyricsElmt.innerHTML= songLyrics[i];
 			i = i + 1;
-		}
-		console.log(Math.round(videoElmt.currentTime));
+		}*/
+		console.log(Math.round(currentTime.getTime()));
 	}
 }
