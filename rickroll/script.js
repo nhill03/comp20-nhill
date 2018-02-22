@@ -78,7 +78,3 @@ function getSongLyrics() {
 function getDelayTimes() {
 	return delayTimes;
 }
-
-function printSubtitles(videoElmt, lyricsElmt) {
-	videoElmt.addEventListener('timeupdate',)
-}
