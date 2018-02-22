@@ -21,8 +21,7 @@
 	//printSubtitles();
 	
 	var lyrics = getSongLyrics();
-	var delayTimes = [2, 4, 6, 8, 10, 12, 14];
-
+	var delayTimes = getDelayTimes();
 	(function(){
 		var lyricsElmt = document.getElementById("lyrics");
 		var videoElmt = document.getElementById("rickroll");

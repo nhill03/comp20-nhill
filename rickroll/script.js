@@ -63,24 +63,22 @@ var songLyrics = [
 "Never gonna tell a lie and hurt you"
 ];
 
-var delayTimes = [5, 6, 7, 9, 10];
+var delayTimes = [
+	19, 23, 27, 31, 35, 41, 43, 45, 48, 51, 54, 56, 61, 64,
+	67, 70, 74, 77, 83, 85, 88, 90, 93, 96, 98, 103, 105,
+	107, 110, 113, 115, 120, 124, 128, 130, 133, 134, 137,
+	141, 143, 145, 149, 154, 159, 161, 164, 166, 170, 172,
+	174, 178, 180, 183, 187, 189, 191, 195, 197, 200, 204,
+	206, 206
+	];
 
 function getSongLyrics() {
 	return songLyrics;
 }
-
+function getDelayTime() {
+	return delayTimes;
+}
 
 function printSubtitles(videoElmt, lyricsElmt) {
-	var i = 0;
-	var startTime = new Date().getTime() / 1000;
-	Math.round(startTime);
-	var currentTime = new Date();
-	while(i < delayTimes.length) {
-		
-		/*if ((currentTime.getTime() - startTime) === delayTimes[i]){
-			lyricsElmt.innerHTML= songLyrics[i];
-			i = i + 1;
-		}*/
-		console.log(Math.round(currentTime.getTime()));
-	}
+	videoElmt.addEventListener('timeupdate',)
 }
