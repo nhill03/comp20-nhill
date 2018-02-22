@@ -22,14 +22,15 @@
 	
 	var lyrics = getSongLyrics();
 	var delayTimes = getDelayTimes();
+
 	(function(){
 		var lyricsElmt = document.getElementById("lyrics");
 		var videoElmt = document.getElementById("rickroll");
 		var i = 0;
     	videoElmt.addEventListener('timeupdate',function(event){
-      		if(delayTimes[i] == Math.round(videoElmt.currentTime) & i < delayTimes.length) {
+      		if(delayTimes[i] == Math.round(videoElmt.currentTime)) {
       			lyricsElmt.innerHTML = lyrics[i];
-      			i++;
+      			i++
       		}
     	},false);
   	})();
