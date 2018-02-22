@@ -19,31 +19,21 @@
 <script type="text/javascript" src="script.js"></script>
 <script>
 	//printSubtitles();
-	var lyricsElmt = document.getElementById("lyrics");
-	var videoElmt = document.getElementById("rickroll");
+	
+	var lyrics = getSongLyrics();
+	var delayTimes = [2, 4, 6, 8, 10, 12, 14];
 
-	delayTimes = [5, 7, 9];
-
-	/*videoElmt.addEventListener('playing', function() {
-		printSubtitles(videoElmt, lyricsElmt);
-		}, true);
-		*/
-
-	/*function printSubtitles(videoElmt, lyricsElmt) {*/
+	(function(){
+		var lyricsElmt = document.getElementById("lyrics");
+		var videoElmt = document.getElementById("rickroll");
 		var i = 0;
-		var startTime = new Date().getTime() / 1000;
-		Math.round(startTime);
-		var currentTime = new Date();
-		while(i < delayTimes.length) {
-		
-		/*if ((currentTime.getTime() - startTime) === delayTimes[i]){
-			lyricsElmt.innerHTML= songLyrics[i];
-			i = i + 1;
-		}*/
-			console.log(Math.round(Date.now()));
-		}
-
-	//printSubtitles(videoElmt, lyricsElmt);
+    	videoElmt.addEventListener('timeupdate',function(event){
+      		if(delayTimes[i] == Math.round(videoElmt.currentTime) & i < delayTimes.length) {
+      			lyricsElmt.innerHTML = lyrics[i];
+      			i++;
+      		}
+    	},false);
+  	})();
 
 </script>
 </body>
