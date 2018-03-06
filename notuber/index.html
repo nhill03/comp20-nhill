@@ -20,20 +20,26 @@
           lat : null,
           long : null
         }
-        // icon for passenger
+        // icons for myself and vehicle
         var personalIcon = 'personalicon.png';
+        var vehicleIcon = 'vehicleicon.png';
+
+        // show my position on the map
         function showPosition(position) {
           coords.lat = position.coords.latitude;
           coords.long = position.coords.longitude;
 
+          // Display my latitude and longitude in header
           h3 = document.getElementById('header');
-          h3.innerHTML = "Latitude: " + coords.lat + "<br />Longitude:" + coords.long;
+          h3.innerHTML = "Latitude: " + coords.lat + 
+          					"<br />Longitude:" + coords.long;
 
           var location = {lat: coords.lat, lng: coords.long};
           var map = new google.maps.Map(document.getElementById('map'), {
             zoom: 4,
             center: location
           });
+          // display my marker
           var marker = new google.maps.Marker({
            position: location,
            icon: personalIcon,
@@ -47,19 +53,33 @@
           var lat = "lat="+coords.lat+"&";
           var long = "lng="+coords.long;
           var params = username.concat(lat, long);
-          var responseText = null;
+      
           //var params = "username=sxQtZTmts3&lat=YOUR_LATITUDE&lng=YOUR_LONGITUDE";
           http.open("POST", url, true);
           //Send the proper header information along with the request
           http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-          http.send(params);
   
-          http.onreadystatechange = function() {//Call a function when the state changes.
+  		  // Display all nearby vehicles/passengers on state change
+          http.onreadystatechange = function() {
               if(http.readyState == 4 && http.status == 200) {
-                  console.log(http.responseText);
+              	// parse json file into array object, print each vehicle's data
+                  responseObj = JSON.parse(http.responseText);
+                  console.log(responseObj);
+                // if statement for determing passenger or vehicle
+
+	                  for(var i = 0; i < responseObj.vehicles.length; i++) {
+	                  	console.log("username: "+responseObj.vehicles[i].username);
+	                  	console.log("Lat: "+responseObj.vehicles[i].lat);
+	                  	console.log("Long: "+responseObj.vehicles[i].lng);
+	                    var marker = new google.maps.Marker({
+	           				position: {lat: responseObj.vehicles[i].lat, lng: responseObj	.vehicles[i].lng},
+	           				icon: vehicleIcon,
+	           				map: map
+	         			});
+	                  }
               }
           }
-
+		http.send(params);
         }
         navigator.geolocation.getCurrentPosition(showPosition);
       }
