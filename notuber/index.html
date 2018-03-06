@@ -20,6 +20,7 @@
           lat : null,
           long : null
         }
+        // icon for passenger
         var personalIcon = 'personalicon.png';
         function showPosition(position) {
           coords.lat = position.coords.latitude;
@@ -38,6 +39,27 @@
            icon: personalIcon,
            map: map
           });
+
+    	// EDIT ALL OF THIS TO SEND DATA TO MING'S API
+          var http = new XMLHttpRequest();
+          var url = "https://jordan-marsh.herokuapp.com/rides";
+          var username = "username=sxQtZTmts3&";
+          var lat = "lat="+coords.lat+"&";
+          var long = "lng="+coords.long;
+          var params = username.concat(lat, long);
+          var responseText = null;
+          //var params = "username=sxQtZTmts3&lat=YOUR_LATITUDE&lng=YOUR_LONGITUDE";
+          http.open("POST", url, true);
+          //Send the proper header information along with the request
+          http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+          http.send(params);
+  
+          http.onreadystatechange = function() {//Call a function when the state changes.
+              if(http.readyState == 4 && http.status == 200) {
+                  console.log(http.responseText);
+              }
+          }
+
         }
         navigator.geolocation.getCurrentPosition(showPosition);
       }
