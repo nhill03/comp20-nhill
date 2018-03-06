@@ -9,9 +9,11 @@
     </style>
   </head>
   <body>
-    <h3>My Google Maps Demo</h3>
+    <h3 id="header">Loading geolocation...</h3>
     <div id="map"></div>
     <script>
+
+
       function initMap() {
         // callback function
         var coords = {
@@ -23,13 +25,16 @@
           coords.lat = position.coords.latitude;
           coords.long = position.coords.longitude;
 
-          var uluru = {lat: coords.lat, lng: coords.long};
+          h3 = document.getElementById('header');
+          h3.innerHTML = "Latitude: " + coords.lat + "<br />Longitude:" + coords.long;
+
+          var location = {lat: coords.lat, lng: coords.long};
           var map = new google.maps.Map(document.getElementById('map'), {
             zoom: 4,
-            center: uluru
+            center: location
           });
           var marker = new google.maps.Marker({
-           position: uluru,
+           position: location,
            icon: personalIcon,
            map: map
           });
