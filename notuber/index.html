@@ -23,8 +23,9 @@
         // icons for myself and vehicle
         var personalIcon = 'personalicon.png';
         var vehicleIcon = 'vehicleicon.png';
+        var passengerIcon = 'datboii.png'
 
-        // show my position on the map
+        // Get my coordinates and display my position on the map
         function showPosition(position) {
           coords.lat = position.coords.latitude;
           coords.long = position.coords.longitude;
@@ -35,18 +36,13 @@
           					"<br />Longitude:" + coords.long;
 
           var location = {lat: coords.lat, lng: coords.long};
+          var LatLngB = new google.maps.LatLng(coords.lat, coords.long);
           var map = new google.maps.Map(document.getElementById('map'), {
             zoom: 4,
             center: location
           });
-          // display my marker
-          var marker = new google.maps.Marker({
-           position: location,
-           icon: personalIcon,
-           map: map
-          });
 
-    	// EDIT ALL OF THIS TO SEND DATA TO MING'S API
+    	// Send my data to the rideshare API
           var http = new XMLHttpRequest();
           var url = "https://jordan-marsh.herokuapp.com/rides";
           var username = "username=sxQtZTmts3&";
@@ -54,7 +50,6 @@
           var long = "lng="+coords.long;
           var params = username.concat(lat, long);
       
-          //var params = "username=sxQtZTmts3&lat=YOUR_LATITUDE&lng=YOUR_LONGITUDE";
           http.open("POST", url, true);
           //Send the proper header information along with the request
           http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -65,27 +60,75 @@
               	// parse json file into array object, print each vehicle's data
                   responseObj = JSON.parse(http.responseText);
                   console.log(responseObj);
+                  console.log(Object.getOwnPropertyNames(responseObj)[0]);
                 // if statement for determing passenger or vehicle
+
+                	// I am a passenger
+                	if(Object.getOwnPropertyNames(responseObj)[0] == "vehicles") {
+                    // create marker for every vehicle
+	                  for(var i = 0; i < responseObj.vehicles.length; i++) {
+	                  	console.log("username: "+responseObj.vehicles[i].username);
+	                  	console.log("Lat: "+responseObj.vehicles[i].lat);
+	                  	console.log("Long: "+responseObj.vehicles[i].lng);
+                      // create marker for every vehicle
+	                    var marker = new google.maps.Marker({
+	           				    position: {lat: responseObj.vehicles[i].lat, lng: responseObj.vehicles[i].lng},
+	           				    icon: vehicleIcon,
+	           				    map: map
+	         			      });
+                      // create google map LatLang objects
+                      // *** LatLangB declared earlier, this is personal location ***
+                      LatLngA = new google.maps.LatLng(responseObj.vehicles[i].lat, responseObj.vehicles[i].lng);
+                      // divide by 1609.34 meters in one mile to get miles
+                      var distance = google.maps.geometry.spherical.computeDistanceBetween(LatLngA, LatLngB) / 1609.34;
+                      console.log(distance);
+
+                      marker.content = '<div>Username: '+responseObj.vehicles[i].username+'<br>Distance: '+distance.toFixed(2)+' miles</div>';
+                      // make infowindows
+                      var infoWindow = new google.maps.InfoWindow();
+                      google.maps.event.addListener(marker, 'click', function () {
+                                infoWindow.setContent(this.content);
+                                infoWindow.open(map, this);
+                      });
+	                  }
+                    // display my marker as passenger
+                    var marker = new google.maps.Marker({
+                       position: location,
+                       icon: personalIcon,
+                       map: map
+                    });
+                    
+            	   }
+	                // I am a vehicle
+	                else {
+	                	// display my marker as vehicle
+          				  var marker = new google.maps.Marker({
+          					  position: location,
+           					  icon: vehicleIcon,
+           					  map: map
+          				  });
 
 	                  for(var i = 0; i < responseObj.vehicles.length; i++) {
 	                  	console.log("username: "+responseObj.vehicles[i].username);
 	                  	console.log("Lat: "+responseObj.vehicles[i].lat);
 	                  	console.log("Long: "+responseObj.vehicles[i].lng);
+                      // create marker for every passenger
 	                    var marker = new google.maps.Marker({
-	           				position: {lat: responseObj.vehicles[i].lat, lng: responseObj	.vehicles[i].lng},
-	           				icon: vehicleIcon,
-	           				map: map
-	         			});
+	           				    position: {lat: responseObj.vehicles[i].lat, lng: responseObj	.vehicles[i].lng},
+	           				    icon: passengerIcon,
+	           				    map: map
+	         			      });
 	                  }
+	                }
               }
           }
-		http.send(params);
+		      http.send(params);
         }
         navigator.geolocation.getCurrentPosition(showPosition);
       }
     </script>
     <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMP_LhFc53MrIIjzim_x7vaO9FK6VSu2g&callback=initMap">
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMP_LhFc53MrIIjzim_x7vaO9FK6VSu2g&callback=initMap&libraries=geometry">
     </script>
   </body>
 </html>
