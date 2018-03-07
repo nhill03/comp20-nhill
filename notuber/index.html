@@ -12,9 +12,9 @@
     <h3 id="header">Loading geolocation...</h3>
     <div id="map"></div>
     <script>
-
-
+      
       function initMap() {
+
         // callback function
         var coords = {
           lat : null,
@@ -51,38 +51,40 @@
           var params = username.concat(lat, long);
       
           http.open("POST", url, true);
+
           //Send the proper header information along with the request
           http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   
   		  // Display all nearby vehicles/passengers on state change
           http.onreadystatechange = function() {
+
               if(http.readyState == 4 && http.status == 200) {
+
               	// parse json file into array object, print each vehicle's data
                   responseObj = JSON.parse(http.responseText);
-                  console.log(responseObj);
-                  console.log(Object.getOwnPropertyNames(responseObj)[0]);
+
                   // variable for determing closest vehicle/passenger
                   shortestDistance = 10000000;
+
                 // if statement for determing passenger or vehicle
                 	// I am a passenger
                 	if(Object.getOwnPropertyNames(responseObj)[0] == "vehicles") {
+
                     // create marker for every vehicle
 	                  for(var i = 0; i < responseObj.vehicles.length; i++) {
-	                  	console.log("username: "+responseObj.vehicles[i].username);
-	                  	console.log("Lat: "+responseObj.vehicles[i].lat);
-	                  	console.log("Long: "+responseObj.vehicles[i].lng);
                       // create marker for every vehicle
 	                    var marker = new google.maps.Marker({
 	           				    position: {lat: responseObj.vehicles[i].lat, lng: responseObj.vehicles[i].lng},
 	           				    icon: vehicleIcon,
 	           				    map: map
 	         			      });
+
                       // create google map LatLang objects
                       // *** LatLangB declared earlier, this is personal location ***
                       var LatLngA = new google.maps.LatLng(responseObj.vehicles[i].lat, responseObj.vehicles[i].lng);
+
                       // divide by 1609.34 meters in one mile to get miles
                       var distance = google.maps.geometry.spherical.computeDistanceBetween(LatLngA, LatLngB) / 1609.34;
-                      console.log(distance);
 
                       // determine which car is closest while computing distances
                       if(shortestDistance > distance) {
@@ -90,6 +92,7 @@
                       }
 
                       marker.content = '<div>Username: '+responseObj.vehicles[i].username+'<br>Distance: '+distance.toFixed(2)+' miles</div>';
+
                       // make infowindows
                       var infoWindow = new google.maps.InfoWindow();
                       google.maps.event.addListener(marker, 'click', function () {
@@ -97,6 +100,7 @@
                                 infoWindow.open(map, this);
                       });
 	                  }
+
                     // display my marker as passenger
                     var marker = new google.maps.Marker({
                        position: location,
@@ -104,6 +108,7 @@
                        map: map
                     });
                     marker.content = '<div>Username: sxQtZTmts3<br>Nearest Vehicle: '+shortestDistance.toFixed(2)+' miles</div';
+
                     // make personal infowindow on clicking my icon
                     var infoWindow = new google.maps.InfoWindow();
                     google.maps.event.addListener(marker, 'click', function () {
@@ -111,6 +116,7 @@
                         infoWindow.open(map, this);
                     });
             	   }
+
 	                // I am a vehicle
 	                else {
 	                	// display my marker as vehicle
@@ -121,21 +127,19 @@
           				  });
 
 	                  for(var i = 0; i < responseObj.passengers.length; i++) {
-	                  	console.log("username: "+responseObj.passengers[i].username);
-	                  	console.log("Lat: "+responseObj.passengers[i].lat);
-	                  	console.log("Long: "+responseObj.passengers[i].lng);
                       // create marker for every passenger
 	                    var marker = new google.maps.Marker({
 	           				    position: {lat: responseObj.passengers[i].lat, lng: responseObj.passengers[i].lng},
 	           				    icon: passengerIcon,
 	           				    map: map
 	         			      });
+
                       // create google map LatLang objects
                       // *** LatLangB declared earlier, this is personal location ***
                       var LatLngA = new google.maps.LatLng(responseObj.passengers[i].lat, responseObj.passengers[i].lng);
+
                       // divide by 1609.34 meters in one mile to get miles
                       var distance = google.maps.geometry.spherical.computeDistanceBetween(LatLngA, LatLngB) / 1609.34;
-                      console.log(distance);
 
                       // compare distances to determine shortest distance
                       if(shortestDistance > distance) {
