@@ -1,18 +1,15 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <style>
-      #map {
-        height: 400px;
-        width: 100%;
-       }
-    </style>
+    <link rel="stylesheet" href="styles.css"/>
+    <meta charset="utf-8"/>
+    <title>Not Uber</title>
   </head>
   <body>
     <h3 id="header">Loading geolocation...</h3>
     <div id="map"></div>
     <script>
-      
+
       function initMap() {
 
         // callback function
@@ -32,8 +29,7 @@
 
           // Display my latitude and longitude in header
           h3 = document.getElementById('header');
-          h3.innerHTML = "Latitude: " + coords.lat + 
-          					"<br />Longitude:" + coords.long;
+          h3.innerHTML = "Please refresh to update page";
 
           var location = {lat: coords.lat, lng: coords.long};
           var LatLngB = new google.maps.LatLng(coords.lat, coords.long);
