@@ -8,24 +8,31 @@
     <link rel="stylesheet" href="style.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script>
+        if(localStorage.length != 0) {
+            var index = localStorage.length - 1;
+            while(i > -1) {
+                $('#log').append("<p>"+localStorage.getItem(storElem)+"</p>");
+                i--;   
+            }
+        }
         $(document).keypress(function(e) {
+
             if(e.which == 13) {
                 // check for browser support
                 if (typeof(Storage) !== "undefined") {
                     // check input, make sure they've entered some text
                     if($('#msg').val().length > 0) {
-                        alert("> 0");
+                        // clear the old list, replcae with new list
+                        $('#log' ).empty();
                         // set text in input box as new item in localstorage
-                        localStorage.setItem(localStorage.length, $('#msg').val());
-                        alert("New value logged: "+localStorage.length+$('#msg').val());
+                        localStorage.setItem(localStorage.length.toString(), $('#msg').val());
                         // iterate from back of list, latest entries = newest = display first
                         i = localStorage.length - 1;
-                        alert(" length - 1: "+i);
                         while(i > -1) {
+                            storElem = i.toString();
                             // add new text to the log div element
-                            $('#log').append(localStorage.i.Stringify());
+                            $('#log').append("<p>"+localStorage.getItem(storElem)+"</p>");
                             i--;
-                            alert("I value in loop:"+i);
                         }
                     }
                     else
