@@ -17,12 +17,15 @@
                         alert("> 0");
                         // set text in input box as new item in localstorage
                         localStorage.setItem(localStorage.length, $('#msg').val());
+                        alert("New value logged: "+localStorage.length+$('#msg').val());
                         // iterate from back of list, latest entries = newest = display first
-                        i = localstorage.length -1
+                        i = localStorage.length - 1;
+                        alert(" length - 1: "+i);
                         while(i > -1) {
                             // add new text to the log div element
-                            $('#log').append(localStorage.i);
+                            $('#log').append(localStorage.i.Stringify());
                             i--;
+                            alert("I value in loop:"+i);
                         }
                     }
                     else
