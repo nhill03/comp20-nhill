@@ -39,7 +39,7 @@
 
     	// Send my data to the rideshare API
           var http = new XMLHttpRequest();
-          var url = "https://jordan-marsh.herokuapp.com/rides";
+          var url = "http://lit-temple-18109.herokuapp.com/rides";
           var username = "username=sxQtZTmts3&";
           var lat = "lat="+coords.lat+"&";
           var long = "lng="+coords.long;
@@ -62,21 +62,27 @@
                   shortestDistance = 10000000;
 
                 // if statement for determing passenger or vehicle
+                var vehicles = ["JANET", "lGhCpJCE5K", "K9m65WRQyh", "3VaFZQS9Ee", "qrsXYLSLFw", "TapqFEtdFF", "FwXkFfHWwT", "E1TmLM4UO6", "6VvCKigQ21", "YTBj8wiOXz", "KiztarwO7h", "Ein4EIwThk", "5EmzPciOP1", "dPA7wAzZoe", "QMrHmCoyCE", "oRF2MrZv83", "DsRILKPCEf", "bomkcQM8oI"];
+                var alreadyInDB = false;
+                for(i = 0; i < vehicles.length; i++) {
+                  if(responseObj.username == vehicles[i]) {
+                    alreadyInDB = true;
+                  }
+                }
                 	// I am a passenger
-                	if(Object.getOwnPropertyNames(responseObj)[0] == "vehicles") {
-
+                	if(!alreadyInDB) {
                     // create marker for every vehicle
-	                  for(var i = 0; i < responseObj.vehicles.length; i++) {
+	                  for(var i = 0; i < responseObj.length; i++) {
                       // create marker for every vehicle
 	                    var marker = new google.maps.Marker({
-	           				    position: {lat: responseObj.vehicles[i].lat, lng: responseObj.vehicles[i].lng},
+	           				    position: {lat: responseObj[i].lat, lng: responseObj[i].lng},
 	           				    icon: vehicleIcon,
 	           				    map: map
 	         			      });
 
                       // create google map LatLang objects
                       // *** LatLangB declared earlier, this is personal location ***
-                      var LatLngA = new google.maps.LatLng(responseObj.vehicles[i].lat, responseObj.vehicles[i].lng);
+                      var LatLngA = new google.maps.LatLng(responseObj[i].lat, responseObj[i].lng);
 
                       // divide by 1609.34 meters in one mile to get miles
                       var distance = google.maps.geometry.spherical.computeDistanceBetween(LatLngA, LatLngB) / 1609.34;
@@ -86,7 +92,7 @@
                         shortestDistance = distance;
                       }
 
-                      marker.content = '<div>Username: '+responseObj.vehicles[i].username+'<br>Distance: '+distance.toFixed(2)+' miles</div>';
+                      marker.content = '<div>Username: '+responseObj[i].username+'<br>Distance: '+distance.toFixed(2)+' miles</div>';
 
                       // make infowindows
                       var infoWindow = new google.maps.InfoWindow();
@@ -121,17 +127,17 @@
            					  map: map
           				  });
 
-	                  for(var i = 0; i < responseObj.passengers.length; i++) {
+	                  for(var i = 0; i < responseObj.length; i++) {
                       // create marker for every passenger
 	                    var marker = new google.maps.Marker({
-	           				    position: {lat: responseObj.passengers[i].lat, lng: responseObj.passengers[i].lng},
+	           				    position: {lat: responseObj[i].lat, lng: responseObj[i].lng},
 	           				    icon: passengerIcon,
 	           				    map: map
 	         			      });
 
                       // create google map LatLang objects
                       // *** LatLangB declared earlier, this is personal location ***
-                      var LatLngA = new google.maps.LatLng(responseObj.passengers[i].lat, responseObj.passengers[i].lng);
+                      var LatLngA = new google.maps.LatLng(responseObj[i].lat, responseObj[i].lng);
 
                       // divide by 1609.34 meters in one mile to get miles
                       var distance = google.maps.geometry.spherical.computeDistanceBetween(LatLngA, LatLngB) / 1609.34;
