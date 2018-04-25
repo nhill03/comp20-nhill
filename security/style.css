@@ -1,0 +1,47 @@
+body {
+	font-family: Noto Sans, sans-serif;
+}
+
+.title {
+	text-align: center;
+	border: 3px solid #888889;
+	border-radius: 5px;
+	background-color: #c4dbff;
+}
+
+.centered {
+	text-align: justify;
+}
+
+.intro, .method, .abstract, .issues {
+	text-align: center;
+	border: 2px solid #b0b1b2;
+	border-radius: 5px;
+	background-color: #d6e5ff;
+}
+
+img {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 900px;
+}
+
+img.bigpic {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 600px;
+}
+
+.narrow {
+	margin-left:auto;
+	margin-right:auto;
+	width:85%;
+}
+
+.top {
+	margin-left:auto;
+	margin-right:auto;
+	width:95%;
+}
